@@ -1,10 +1,13 @@
 from fastapi import FastAPI
+from fastapi import HTTPException
 from database import database as conn
 from database import User
 from database import Movie
 from database import UserReview
+from schemas import UserBaseModel
 
-app = FastAPI(title='Hello')
+
+app = FastAPI(title='Movie review API')
 
 
 @app.get('/')
@@ -29,3 +32,20 @@ def startup():
 def shutdown():
     if not conn.is_closed():
         conn.close()
+
+
+@app.post('/users')
+async def create_user(user: UserBaseModel):
+
+    if User.select().where(User.username == user.username).exists():
+
+        return HTTPException(409, 'User name already exist.')
+
+    hash_pssword = User.encrypt_password(user.password)
+
+    user = User.create(
+        username=user.username,
+        password=hash_pssword
+    )
+
+    return user.id
