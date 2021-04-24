@@ -1,26 +1,35 @@
-from peewee import Database, MySQLDatabase
+from peewee import *
+from datetime import datetime
+import hashlib
 
-database = MySQLDatabase('DATABASE', user='',
-                         password='',
-                         host='',
-                         port='')
+database = MySQLDatabase('MOVIE_REVIEW', user='root',
+                         password='Master11',
+                         host='127.0.0.1',
+                         port=3306)
 
 
 class User(Model):
-    userName = CharField(max_length=60, unique=True)
-    password = CharField(max_length=60)
-    create_date = DateField(default=datetime.now)
+    username = CharField(max_length=50, unique=True)
+    password = CharField(max_length=50)
+    create_date = DateTimeField(default=datetime.now)
 
     def __str__(self):
-        return self.userName
+        return self.username
 
     class Meta:
         database = database
         table_name = 'users'
 
+    @classmethod
+    def encrypt_password(cls, password):
+        h = hashlib.md5()
+        h.update(password.encode('utf-8'))
+
+        return h.hexdigest()
+
 
 class Movie(Model):
-    title = CharField(max_length=60)
+    title = CharField(max_length=50)
     create_date = DateTimeField(datetime.now)
 
     def __str__(self):
