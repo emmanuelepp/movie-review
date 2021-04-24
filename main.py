@@ -4,7 +4,8 @@ from database import database as conn
 from database import User
 from database import Movie
 from database import UserReview
-from schemas import UserBaseModel
+from schemas import UserRequestModel
+from schemas import UserResponseModel
 
 
 app = FastAPI(title='Movie review API')
@@ -34,8 +35,8 @@ def shutdown():
         conn.close()
 
 
-@app.post('/users')
-async def create_user(user: UserBaseModel):
+@app.post('/users', response_model=UserResponseModel)
+async def create_user(user: UserRequestModel):
 
     if User.select().where(User.username == user.username).exists():
 
@@ -48,4 +49,4 @@ async def create_user(user: UserBaseModel):
         password=hash_pssword
     )
 
-    return user.id
+    return user
