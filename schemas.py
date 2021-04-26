@@ -27,10 +27,27 @@ class UserRequestModel(BaseModel):
         return username
 
 
-class UserResponseModel(BaseModel):
-    id: int
-    username: str
+class ResponseModel(BaseModel):
 
     class Config:
         orm_mode = True
         getter = PeeWeeGetterDict
+
+
+class UserResponseModel(ResponseModel):
+    id: int
+    username: str
+
+
+class ReviewRequestModel(BaseModel):
+    user_id: int
+    movie_id: int
+    review: str
+    score: int
+
+
+class ReviewResponseModel(ResponseModel):
+    id: int
+    movie_id: int
+    reviews: str
+    score: int
