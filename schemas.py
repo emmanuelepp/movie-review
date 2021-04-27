@@ -45,6 +45,14 @@ class ReviewRequestModel(BaseModel):
     review: str
     score: int
 
+    @validator('score')
+    def username_validator(cls, score):
+        if score < 1 or score > 5:
+            raise ValueError(
+                "The score  must be more that 1 and less that 5")
+
+        return username
+
 
 class ReviewResponseModel(ResponseModel):
     id: int

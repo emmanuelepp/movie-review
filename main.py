@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 from fastapi import HTTPException
 from database import database as conn
+
 from database import User
 from database import Movie
 from database import UserReview
+
 from schemas import UserRequestModel
 from schemas import UserResponseModel
 from schemas import ReviewRequestModel
@@ -15,12 +17,12 @@ app = FastAPI(title='Movie review API')
 
 @app.get('/')
 async def index():
-    return 'Hello'
+    return ''
 
 
 @app.get('/about')
 async def about():
-    return 'Hello'
+    return ''
 
 
 @app.on_event('startup')
