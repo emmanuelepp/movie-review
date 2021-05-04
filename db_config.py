@@ -2,9 +2,9 @@ from peewee import *
 from datetime import datetime
 import hashlib
 
-database = MySQLDatabase('MOVIE_REVIEW', user='root',
-                         password='Master11',
-                         host='127.0.0.1',
+database = MySQLDatabase('', user='',
+                         password='',
+                         host='',
                          port=3306)
 
 
