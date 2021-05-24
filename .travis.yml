@@ -1,26 +1,14 @@
 language: python
-
-cache:
-  directories:
-    - 
-    
 python:
-  '3.9'
+  - "3.9"
 
-git:
-  depth: 3
+virtualenv:
+  system_site_packages: true
 
+# command to install dependencies
+install:
+  - pip install
+
+# command to run tests
 script:
-  - yarn build
-
-deploy:
-  provider: pages
-  skip-cleanup: true
-  keep-history;: true
-  github-token: $GITHUB_TOKEN
-  local-dir: '/'
-  commit-message: "Project deploy"
-  on:
-    branch: master
-
-
+  - pytest
